@@ -1,4 +1,4 @@
-from database import sql_executor
+from src.database import sql_executor
 class Users:
     def register_user(self):
         try:

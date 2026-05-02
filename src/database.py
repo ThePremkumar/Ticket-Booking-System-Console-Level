@@ -2,11 +2,11 @@ import sqlite3
 
 def sql_executor(query, params=None, fetch=False):
     sqliteConnection = None
-    
+
     try:
         sqliteConnection = sqlite3.connect('movie_booking.db')
         cursor = sqliteConnection.cursor()
-        print("DB Init")
+        # print("DB Init")
 
 
         if params:
@@ -27,7 +27,7 @@ def sql_executor(query, params=None, fetch=False):
         # Ensure the database connection is closed
         if sqliteConnection:
             sqliteConnection.close()
-            print('SQLite Connection closed')
+            # print('SQLite Connection closed')
 
 # sql_executor('SELECT sqlite_version();')
 

@@ -1,4 +1,4 @@
-from database import sql_executor
+from src.database import sql_executor
 
 class Movie:
     #--- Add a New Movie ---

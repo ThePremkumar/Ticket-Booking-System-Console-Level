@@ -1,6 +1,6 @@
-from database import sql_executor
+from src.database import sql_executor
 
-from admin import Movie
+from src.admin import Movie
 
 class Booking:
     def book_ticket(self):
@@ -8,14 +8,13 @@ class Booking:
             Movie().get_all_movies()
 
             user_id = int(input("Enter your user ID: "))
-            movie_id = int(input("Enter the movie id "))
-        
+            movie_id = int(input("Enter the movie id: "))
+            seats_booked = int(input("Enter the number of seats: "))
+
             result = sql_executor('SELECT available_seats FROM Movies WHERE movie_id = ?', (movie_id,), fetch=True)
             if not result or result[0][0] < seats_booked:
                 print("Not enough seats available.")
                 return
-            
-            seats_booked = int(input("Enter the number of seats"))
 
             if seats_booked <= 0:
                 raise ValueError("Seats must be at least 1.")
@@ -25,16 +24,17 @@ class Booking:
             data = (user_id, movie_id, seats_booked)
 
             sql_executor(query, data)
+            print(f"Successfully booked {seats_booked} seat(s) for movie ID {movie_id}!")
 
         except Exception as error:
             print(error)
 
-    def cancel_booking():
+    def cancel_booking(self):
         try:
             user_id = int(input("Enter your user ID: "))
-            movie_id = int(input("Enter the movie id to cancel the booking "))
+            movie_id = int(input("Enter the movie id to cancel the booking: "))
 
-            result = sql_executor('SELECT * FROM bookings WHERE user_id AND movie_id = ?', (user_id, movie_id,), fetch=True)
+            result = sql_executor('SELECT seats_booked FROM Bookings WHERE user_id = ? AND movie_id = ?', (user_id, movie_id,), fetch=True)
 
             if not result:
                     print("No booking found.")
